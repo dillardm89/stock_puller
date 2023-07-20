@@ -42,7 +42,7 @@ def get_stock_info(symbol):
     data = yf.download(symbol, start=start_date, end=end_date)
     closing_prices = data['Close']
     price_calculated = (closing_prices[-1] - closing_prices[0]) / closing_prices[0] * 100
-    ytd_performance = round(price_calculated, 3)
+    ytd_performance = round(price_calculated, 2)
     debug_print(ytd_performance)
 
     # Calculate 1-year performance
@@ -53,7 +53,7 @@ def get_stock_info(symbol):
     data = yf.download(symbol, start=start_date, end=end_date)
     closing_prices = data['Close']
     price_calculated = (closing_prices[-1] - closing_prices[0]) / closing_prices[0] * 100
-    one_year_performance = round(price_calculated, 3)
+    one_year_performance = round(price_calculated, 2)
     debug_print(one_year_performance)
 
     # Calculate 5-year performance
@@ -64,7 +64,7 @@ def get_stock_info(symbol):
     data = yf.download(symbol, start=start_date, end=end_date)
     closing_prices = data['Close']
     price_calculated = (closing_prices[-1] - closing_prices[0]) / closing_prices[0] * 100
-    five_year_performance = round(price_calculated, 3)
+    five_year_performance = round(price_calculated, 2)
     debug_print(five_year_performance)
 
     # Calculate 10-year performance
@@ -75,13 +75,13 @@ def get_stock_info(symbol):
     data = yf.download(symbol, start=start_date, end=end_date)
     closing_prices = data['Close']
     price_calculated = (closing_prices[-1] - closing_prices[0]) / closing_prices[0] * 100
-    ten_year_performance = round(price_calculated, 3)
+    ten_year_performance = round(price_calculated, 2)
     debug_print(ten_year_performance)
 
     # Get dividend information
     dividend = 'N/A'
     if 'trailingAnnualDividendRate' in stock.info:
-        dividend = stock.info['trailingAnnualDividendRate']
+        dividend = round(stock.info['trailingAnnualDividendRate'],2)
     debug_print(dividend)
 
     market_cap = 'N/A'
@@ -92,7 +92,7 @@ def get_stock_info(symbol):
     expense_ratio = 'N/A'
     eratio = scrape_by_path(symbol, "//*[@id='quote-summary']/div[2]/table/tbody/tr[7]/td[2]")
     if "%" in eratio:
-        expense_ratio = eratio
+        expense_ratio = float(eratio.replace("%", ""))
     debug_print(expense_ratio)
 
     last_split_date = 'N/A'
@@ -103,7 +103,7 @@ def get_stock_info(symbol):
     pe_ratio = 'N/A'
     rpe_ratio = 'N/A'
     if 'trailingPE' in stock.info:
-        pe_ratio = round(stock.info['trailingPE'], 3)
+        pe_ratio = round(stock.info['trailingPE'], 2)
         rpe_ratio = 'FAIR PE'
         if pe_ratio > 24:
             rpe_ratio = 'OVERVALUED'
@@ -128,29 +128,29 @@ def get_stock_info(symbol):
 
     beta_indicator = 'N/A'
     if 'beta' in stock.info:
-        beta_indicator = stock.info['beta']
+        beta_indicator = round(stock.info['beta'],2)
 
     rbeta_indicator = 'N/A'
     if beta_indicator != 'N/A':
         rbeta_indicator = 'BETA OK'
         if beta_indicator > 1.5:
-            rbeta_indicator = 'EXTREME RISK (Riskier than S&P 500)'
-        if beta_indicator > 1.2 and beta_indicator < 1.5:
-            rbeta_indicator = 'HIGH RISK (Riskier than S&P 500)'
-        if beta_indicator > 1 and beta_indicator < 1.2:
-            rbeta_indicator = 'OK (Same as S&P 500))'
+            rbeta_indicator = 'EXTREME RISK (50% Riskier Than S&P 500)'
+        if beta_indicator > 1.1 and beta_indicator < 1.5:
+            rbeta_indicator = 'HIGH RISK (20-50% Riskier Than S&P 500)'
+        if beta_indicator > 1 and beta_indicator < 1.1:
+            rbeta_indicator = 'OK (Within 10% Risk as S&P 500))'
         if beta_indicator < 1:
-            rbeta_indicator = 'LOW RISK (Safer than S&P 500)'
+            rbeta_indicator = 'LOW RISK (Less Risky Than S&P 500)'
 
     five_year_div_yld = 'N/A'
     if 'fiveYearAvgDividendYield' in stock.info:
-        five_year_div_yld = round(stock.info['fiveYearAvgDividendYield'], 3)
+        five_year_div_yld = round(stock.info['fiveYearAvgDividendYield'], 2)
     debug_print(five_year_div_yld)
 
     debt_to_equity = 'N/A'
     rdebt_to_equity = 'N/A'
     if 'debtToEquity' in stock.info:
-        debt_to_equity = round(stock.info['debtToEquity'], 3)
+        debt_to_equity = round(stock.info['debtToEquity'], 2)
         rdebt_to_equity = 'D/E OK'
         if debt_to_equity < 0 and debt_to_equity > 2.5:
             rdebt_to_equity = 'WARNING D/E'
@@ -167,19 +167,19 @@ def get_stock_info(symbol):
 
     return {
         'Symbol': symbol,
-        'Market Cap': market_cap,
-        'YTD': ytd_performance,
-        '1-Year': round(one_year_performance, 3),
-        '5-Year': round(five_year_performance, 3),
-        '10-Year': round(ten_year_performance, 3),
-        'Dividend': dividend,
+        'Market Cap $': market_cap,
+        'YTD %': ytd_performance,
+        '1-Year %': one_year_performance,
+        '5-Year %': five_year_performance,
+        '10-Year %': ten_year_performance,
+        'Dividend %': dividend,
         'Last Split Factor': last_split_factor,
         'Last Split Date': last_split_date,
-        'Expense Ratio': expense_ratio,
+        'Expense Ratio %': expense_ratio,
         'Recommend Operation': recommendation,
         'Beta Indicator': beta_indicator,
         'Recommend. Beta Indicator': rbeta_indicator,
-        '5-Year Div. Yield': five_year_div_yld,
+        '5-Year Div. Yield %': five_year_div_yld,
         'Debt to Equity': debt_to_equity,
         'EBITDA Margins': ebitda_margins,
         'Recommend. EBITDA Margins': rebitda_margins,

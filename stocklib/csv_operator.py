@@ -16,12 +16,12 @@ def append_stock_info_to_csv(stock_info, filename, write_header=False):
     :type write_header: bool, optional
     """
     with open(filename, 'a', newline='') as csvfile:
-        fieldnames = ['Symbol', "Name in M1", "Shares", 'Market Cap', 'YTD', '1-Year', '5-Year',
-                      '10-Year', 'Dividend', 'Expense Ratio', 'P/E', "Cost Basis",
-                      "Unrealized Gain/Loss", "Unrealized Gain/Loss %", "Avg Price", "Cost Basis", 'Last Split Factor',
-                      'Recommend Operation', '5-Year Div. Yield', 'Debt to Equity', 'EBITDA Margins',
-                      'Recommend. EBITDA Margins', 'Recommend. D/E', 'Recommend. P/E', 'Last Split Date',
-                      'Beta Indicator', 'Recommend. Beta Indicator']
+        fieldnames = ['Symbol', "Name in M1", "Shares", "Avg Price $", "Cost Basis $", "Unrealized Gain/Loss $", 
+                      "Unrealized Gain/Loss %", 'Value $', 'Market Cap $', 'YTD %', '1-Year %', '5-Year %',
+                      '10-Year %', 'Dividend %', '5-Year Div. Yield %', 'Expense Ratio %', 'P/E', 'Beta Indicator', 
+                      'Last Split Factor', 'Last Split Date', 'Debt to Equity', 'EBITDA Margins',
+                      'Recommend. P/E', 'Recommend. Beta Indicator', 'Recommend. D/E',
+                      'Recommend. EBITDA Margins', 'Recommend Operation']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         if write_header:
             writer.writeheader()

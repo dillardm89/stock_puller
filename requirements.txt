@@ -1,2 +1,2 @@
-yfinance==0.2.20
+yfinance==0.2.20  #Windows requires 0.2.24 or yf.Ticker will return cookier/crumb error (not sure about Linux)
 selenium==4.9.0

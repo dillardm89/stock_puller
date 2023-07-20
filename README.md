@@ -34,7 +34,7 @@ docker run -it stock-data-puller
 ```bash
 # Create a virtualenv:
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate #Alternately for Windows: venv/Scripts/activate
 pip install -r requirements.txt
 python process_csv_data.py --help
 python process_csv_data.py -i stock_data.csv -o stock_data_processed.csv

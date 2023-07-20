@@ -2,8 +2,7 @@
 
 from stocklib.general import debug_print
 
-
-def join_m1_when_qute(data1, data2):
+def join_m1_when_quote(data1, data2):
     """This function is used to join data from M1 CSV file when there is a quote in the data.
 
     :param data1: First data to join
@@ -14,14 +13,12 @@ def join_m1_when_qute(data1, data2):
     :rtype: String
     """
     if data2 is None:
-        return data1.replace(",", " ")
-    if '"' in data1:
-        fix = "{} {}".format(data1, data2).replace(",", " ")
-        return fix
+        return float(data1.replace(",", ""))
     if "," in data1:
-        return data1.split(".")[0].replace(",", ".")
-    return data1
-
+        return float(data1.replace(",", ""))
+    if not "." in data1:
+        return data1
+    return float(data1)
 
 def sanitize_m1(row):
     """ This function is used to sanitize M1 data from CSV file from Holdings" tab.
@@ -32,12 +29,14 @@ def sanitize_m1(row):
     :rtype: Dictionary
     """
     append = {
-        "Name in M1": join_m1_when_qute(row[1], row[2]),
-        "Shares": join_m1_when_qute(row[2], row[3]),
-        "Avg Price": join_m1_when_qute(row[3], row[4]),
-        "Cost Basis": join_m1_when_qute(row[4], row[5]),
-        "Unrealized Gain/Loss": join_m1_when_qute(row[5], row[6]),
-        "Unrealized Gain/Loss %": join_m1_when_qute(row[6], row[7]),
+        "Name in M1": join_m1_when_quote(row[1], row[2]),
+        "Shares": join_m1_when_quote(row[2], row[3]),
+        "Avg Price $": join_m1_when_quote(row[3], row[4]),
+        "Cost Basis $": join_m1_when_quote(row[4], row[5]),
+        "Unrealized Gain/Loss $": join_m1_when_quote(row[5], row[6]),
+        "Unrealized Gain/Loss %": join_m1_when_quote(row[6], row[7]),
+        "Value $": join_m1_when_quote(row[7], None),
     }
+
     debug_print(append)
     return append

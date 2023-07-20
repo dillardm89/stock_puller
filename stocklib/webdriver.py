@@ -45,7 +45,7 @@ def scrape_by_path(fund_symbol, xpath, performance="summary"):
     # Set path to your chromedriver executable
     driver = webdriver.Chrome("/usr/bin/chromedriver", options=options)
 
-    # Start the WebDriver and load the Morningstar website
+    # Start the WebDriver and load the YFinance website
     # service = Service(chromedriver_path)
     # driver = webdriver.Chrome(service=service, options=options)
 

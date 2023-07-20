@@ -9,6 +9,24 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
+            "args": ["-i",
+                    "C:\\Users\\dilla\\Downloads\\Holdings-Jul-19-2023.csv", 
+                    "-o", 
+                    "C:\\Users\\dilla\\Downloads\\Holdings_Processed_07192023.csv"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: App File",
+            "type": "python",
+            "request": "launch",
+            "module": "stock_puller",
+            "args": ["-i",
+                    "C:\\Users\\dilla\\Downloads\\Holdings-Jul-19-2023.csv", 
+                    "-o", 
+                    "C:\\Users\\dilla\\Downloads\\Holdings_Processed_07192023.csv"
+            ],
             "console": "integratedTerminal",
             "justMyCode": true
         }
