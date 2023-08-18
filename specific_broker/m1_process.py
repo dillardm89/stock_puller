@@ -10,15 +10,24 @@ def join_m1_when_quote(data1, data2):
     :param data2: Second data to join
     :type data2: String
     :return: Joined data
-    :rtype: String
+    :rtype data1 for rows 1 and 2: String
+    :rtype data1 for rows 3-7: Float
     """
+
     if data2 is None:
         return float(data1.replace(",", ""))
     if "," in data1:
-        return float(data1.replace(",", ""))
-    if not "." in data1:
-        return data1
-    return float(data1)
+        data1 = data1.replace(",", "")
+        try:
+            return float(data1)
+        except:
+            return str(data1)
+    if "." in data1:
+        try:
+            return float(data1)
+        except:
+            return str(data1)
+    return data1
 
 def sanitize_m1(row):
     """ This function is used to sanitize M1 data from CSV file from Holdings" tab.

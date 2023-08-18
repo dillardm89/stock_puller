@@ -1,2 +1,2 @@
-yfinance==0.2.20  #Windows requires 0.2.24 or yf.Ticker will return cookier/crumb error (not sure about Linux)
-selenium==4.9.0
+yfinance==0.2.24  #Windows requires 0.2.24 or yf.Ticker will return cookier/crumb error (old was 0.2.20)
+selenium==4.11.2 #Version 116+ of Chrome requires selenium==4.11.2 (old was 4.9.0)

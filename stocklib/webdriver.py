@@ -42,12 +42,11 @@ def scrape_by_path(fund_symbol, xpath, performance="summary"):
     options.add_argument("--window-size=1980,1020")
     options.add_argument('--disable-gpu')
 
-    # Set path to your chromedriver executable
-    driver = webdriver.Chrome("/usr/bin/chromedriver", options=options)
+    # Set path to your chromedriver executable (old selenium version)
+    #driver = webdriver.Chrome("/usr/bin/chromedriver", options=options)
 
-    # Start the WebDriver and load the YFinance website
-    # service = Service(chromedriver_path)
-    # driver = webdriver.Chrome(service=service, options=options)
+    # Start the WebDriver and load the YFinance website (new selenium version)
+    driver = webdriver.Chrome(options=options)
 
     # Load the URL to scrape
     url = scrape_url_by_requirement(fund_symbol, performance)
